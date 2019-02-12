@@ -2,10 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -24,9 +23,8 @@ const styles = theme => ({
 
 class OutlinedInputAdornments extends React.Component {
   state = {
-    card: '',
-    expiration:'',
-    token:'',
+    value: '',
+    expiration:'2020-01-01',
     select: 'card',
 
   };
@@ -35,11 +33,15 @@ class OutlinedInputAdornments extends React.Component {
     this.setState({ [prop]: event.target.value });
   };
 
+  componentWillUnmount(){
+      this.setState({value:"", expiration:'2020-01-01'})
+  }
+
 
   render() {
     const { classes } = this.props;
     const labelValue = this.state.select === 'card'? "Credit Card" : "Token Value";
-
+    console.log(this.state)
 
 
     return (
@@ -52,9 +54,6 @@ class OutlinedInputAdornments extends React.Component {
           label="Credit Card or Token"
           value={this.state.select}
           onChange={this.handleChange('select')}
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
         >
           
             <MenuItem value='card'>
@@ -67,30 +66,29 @@ class OutlinedInputAdornments extends React.Component {
         </TextField>
 
         <TextField
-                        id="outlined-simple-start-adornment"
-                        className={classNames(classes.margin, classes.textField)}
-                        variant="outlined"
-                        label={labelValue}
-                        value={this.state.token}
-                        InputProps={{
-                          startAdornment: <InputAdornment position="start">#</InputAdornment>,
-                        }}
-                      />
+            className={classNames(classes.margin, classes.textField)}
+            variant="outlined"
+            label={labelValue}
+            value={this.state.value}
+            onChange={this.handleChange('value')}
+         />
 
 
         <TextField
-          id="outlined-adornment-amount"
+          id="outlined-adornment-date"
           className={classNames(classes.margin, classes.textField)}
           variant="outlined"
           type="date"
           label="Expieration Date"
-          value={this.state.amount}
-          onChange={this.handleChange('amount')}
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
+          placeholder=""
+          value={this.state.expiration}
+          onChange={this.handleChange('expiration')}
+
         />
 
+        <Button variant="contained" size="large" color="primary" onClick={null}>
+            Sumbit
+        </Button>
 
       </div>
     );
